@@ -21,3 +21,7 @@ int ft_type_tolower(int c);
 token *lexer(const char *input);
 void print_tokens(token *head);
 void free_tokens(token **head);
+
+//parsing
+void free_ast(ast **node);
+ast* parse_pipe(token **current);

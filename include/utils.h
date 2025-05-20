@@ -10,6 +10,7 @@
 #define BUFFER_MAX 4096
 #define MAX_PATH 4096
 #define MAX_TOKEN_LEN 64
+#define MAX_ARGS 20
 
 #define ANSI_COLOR_RED     "\x1b[91m"  // bright red
 #define ANSI_COLOR_GREEN   "\x1b[92m"  // bright green
@@ -43,3 +44,22 @@ typedef enum e_quote_state {
     SINGLE,
     DOUBLE
 } e_quote_state;
+
+//parsing
+typedef enum e_ast_type {
+    AST_COMMAND,
+    AST_PIPELINE,
+    AST_REDIR_OUT,
+    AST_REDIR_IN,
+    AST_REDIR_APPEND,
+    AST_HEREDOC
+} e_ast_type;
+
+typedef struct ast {
+    e_ast_type type;
+    struct ast *left;  //pipe
+    struct ast *right; //redirect
+
+    char **argv; //args
+    char *filename; //target file
+} ast;

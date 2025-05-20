@@ -6,6 +6,57 @@
 
 static volatile int RUNNING = 1;
 token *g_token_head;
+ast *g_ast_head;
+
+void print_indent(int depth) {
+    for (int i = 0; i < depth; i++)
+        printf("  "); // 2 espaces par niveau
+}
+
+void print_ast(ast *node, int depth) {
+    if (!node)
+        return;
+
+    print_indent(depth);
+
+    switch (node->type) {
+        case AST_COMMAND:
+            printf("COMMAND:");
+            for (int i = 0; node->argv && node->argv[i]; i++)
+                printf(" %s", node->argv[i]);
+            printf("\n");
+            break;
+
+        case AST_PIPELINE:
+            printf("PIPE |\n");
+            break;
+
+        case AST_REDIR_OUT:
+            printf("REDIR > %s\n", node->filename);
+            break;
+
+        case AST_REDIR_IN:
+            printf("REDIR < %s\n", node->filename);
+            break;
+
+        case AST_REDIR_APPEND:
+            printf("REDIR >> %s\n", node->filename);
+            break;
+
+        case AST_HEREDOC:
+            printf("HEREDOC << %s\n", node->filename);
+            break;
+
+        default:
+            printf("UNKNOWN NODE\n");
+            break;
+    }
+
+    if (node->left)
+        print_ast(node->left, depth + 1);
+    if (node->right)
+        print_ast(node->right, depth + 1);
+}
 
 /**
  * print current working dir.
@@ -72,6 +123,7 @@ int start_shell(){
 
     //declaring ptr to token list.
     g_token_head = NULL;
+    g_ast_head = NULL;
 
     //handling commands.
     while(RUNNING > 0){
@@ -94,14 +146,24 @@ int start_shell(){
             return 1;
         }
 
+        //lex
         g_token_head = lexer(buffer);
         if(!g_token_head){
             printf("[!] Error lexing commands.\n");
             return 1;
         }
 
-        print_tokens(g_token_head);
+        //parse
+        g_ast_head = parse_pipe(&g_token_head);
+        if(!g_ast_head){
+            printf("[!] Error parsing commands\n");
+            free_tokens(&g_token_head);
+            return 1;
+        }
+
+        print_ast(g_ast_head, 0);
         free_tokens(&g_token_head);
+        free_ast(&g_ast_head);
     }
 
     return 0;
