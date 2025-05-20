@@ -16,6 +16,9 @@
 >[!Important]
 >This repo contains samples I wroted. It may not be perfect so don't blame me if you see potentials errors.
 
+>[!Warning]
+>I Had habit to use C under windows env so don't blame me if you see Windows synthax haha.
+
 **currently building solution...**
 
 
