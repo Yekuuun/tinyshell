@@ -5,6 +5,7 @@
 extern volatile int RUNNING;
 extern token *g_token_head;
 extern ast *g_ast_head;
+extern history *g_history_head;
 
 //input.c
 int start_shell();
@@ -36,3 +37,15 @@ void free_tokens(token **head);
 //parsing
 void free_ast(ast **node);
 ast* parse_pipe(token **current);
+
+//---------------UTILS--------------
+
+typedef struct history {
+    char *cmd;
+    struct history *next;
+    struct history *prev;
+} history;
+
+void add_to_history(history **head,const char *cmd);
+void free_history(history **ref);
+void display_history();
