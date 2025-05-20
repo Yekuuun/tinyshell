@@ -11,6 +11,8 @@
 #define MAX_PATH 4096
 #define MAX_TOKEN_LEN 64
 #define MAX_ARGS 20
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
 
 #define ANSI_COLOR_RED     "\x1b[91m"  // bright red
 #define ANSI_COLOR_GREEN   "\x1b[92m"  // bright green

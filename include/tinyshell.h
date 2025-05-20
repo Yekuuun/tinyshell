@@ -1,11 +1,18 @@
 #pragma once
 #include "utils.h"
 
+//global vars
+extern volatile int RUNNING;
+extern token *g_token_head;
+extern ast *g_ast_head;
+
 //input.c
 int start_shell();
 
 //builtins
 void clear();
+void pwd();
+void exit(const char **args);
 
 //ft_str
 size_t ft_str_len(const char *str);
@@ -16,6 +23,10 @@ char *ft_extract_word(const char *input, int *index);
 
 //ft_type
 int ft_type_tolower(int c);
+int ft_type_isdigit(char c);
+
+//ft_atoi
+int ft_atoi(const char *str);
 
 //lexing
 token *lexer(const char *input);

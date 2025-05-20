@@ -4,22 +4,10 @@
 
 #include "tinyshell.h"
 
-//global
 static volatile int RUNNING = 1;
 token *g_token_head;
 ast *g_ast_head;
 
-
-/**
- * print current working dir.
- */
-static void get_current_working_dir(){
-    char cwd[MAX_PATH] = {0};
-
-    if(getcwd(cwd, MAX_PATH) != NULL){
-        printf("%s", cwd);
-    }
-}
 
 /**
  * print current user username.
@@ -46,7 +34,7 @@ static void print_shell_banner(){
 
     printf(ANSI_COLOR_GREEN);
     printf("~");
-    get_current_working_dir();
+    pwd();
     printf("$ ");
 
     printf(ANSI_COLOR_RESET);
