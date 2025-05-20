@@ -88,17 +88,17 @@ void print_tokens(token *head){
 /**
  * Free memory for allocated tokens.
  */
-void free_tokens(token *head){
-    token *current = head;
-    while(current){
-        token *next = current->next;
-        free(current->value);
-        free(current);
-
-        current = next;
+void free_tokens(token **head){
+    if (head && *head) {
+        token *current = *head;
+        while (current) {
+            token *next = current->next;
+            free(current->value);
+            free(current);
+            current = next;
+        }
+        *head = NULL;
     }
-
-    head = NULL;
 }
 
 /**

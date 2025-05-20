@@ -1,6 +1,7 @@
 #include "tinyshell.h"
 
 static volatile int RUNNING = 1;
+token *g_token_head;
 
 /**
  * print current working dir.
@@ -45,14 +46,28 @@ static void print_shell_banner(){
 }
 
 /**
+ * Handling CTRL-C events => proper exit.
+ */
+static void crtrl_c_handler(int sig){
+    (void)sig;
+
+    printf("[*] Catched CTRL-C event. Ending tinyshell.\n");
+    free_tokens(&g_token_head);
+
+    RUNNING = 0;
+    exit(130);
+}
+
+/**
  * Main function for handling shell functions.
  */
 int start_shell(){
+    signal(SIGINT, crtrl_c_handler);
     char buffer[BUFFER_MAX] = {0};
     clear();
 
     //declaring ptr to token list.
-    token *head = NULL;
+    g_token_head = NULL;
 
     //handling commands.
     while(RUNNING > 0){
@@ -75,14 +90,14 @@ int start_shell(){
             return 1;
         }
 
-        head = lexer(buffer);
-        if(!head){
+        g_token_head = lexer(buffer);
+        if(!g_token_head){
             printf("[!] Error lexing commands.\n");
             return 1;
         }
 
-        print_tokens(head);
-        free_tokens(head);
+        print_tokens(g_token_head);
+        free_tokens(&g_token_head);
     }
 
     return 0;

@@ -17,4 +17,4 @@ char *ft_str_dup(const char *s);
 //lexing
 token *lexer(const char *input);
 void print_tokens(token *head);
-void free_tokens(token *head);
+void free_tokens(token **head);
