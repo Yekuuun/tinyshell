@@ -1,6 +1,30 @@
 #include "tinyshell.h"
 
 /**
+ * Check is character is a special meta character
+ */
+static bool is_shell_metacharacter(char c) {
+    return (c == '|' || c == '<' || c == '>');
+}
+
+
+/**
+ * Add a character to dynamic buffer if necessary using realloc.
+ */
+static int ft_append_char(char **buffer, int *len, int *cap, char c) {
+    if (*len + 1 >= *cap) {
+        *cap *= 2;
+        char *new_buf = realloc(*buffer, *cap);
+        if (!new_buf)
+            return -1;
+            
+        *buffer = new_buf;
+    }
+    (*buffer)[(*len)++] = c;
+    return 0;
+}
+
+/**
  * Base str_len function.
  */
 size_t ft_str_len(const char *str){
@@ -53,7 +77,7 @@ int ft_str_cmp(const char *s1, const char *s2){
 
     if (c1 == c2)
         return 0;
-        
+
     return (c1 < c2) ? -1 : 1;
 }
 
@@ -70,23 +94,91 @@ char *ft_str_dup(const char *s){
         return NULL;
 
     ft_str_ncpy(dup, s, len);
+    dup[len] = '\0';
     return dup;
 }
 
 /**
  * Extract a word from an str.
  */
-char *ft_extract_word(const char *line, int *i){
-    int start = *i;
-    while (line[*i] && line[*i] != ' ' && line[*i] != '\t')
-        (*i)++;
+char *ft_extract_word(const char *input, int *index) {
+    int i = *index;
+    int len = 0, cap = MAX_TOKEN_LEN;
+    e_quote_state state = DEFAULT;
 
-    int len = *i - start;
-    char *word = malloc(len + 1);
-    if (!word)
+    char *buffer = malloc(cap);
+    if (!buffer)
         return NULL;
 
-    strncpy(word, line + start, len);
-    word[len] = '\0';
-    return word;
+    while (input[i]) {
+        char c = input[i];
+
+        if (state == DEFAULT && is_shell_metacharacter(c)) {
+            if (len == 0) {
+                buffer[len++] = c;
+                i++;
+            }
+            break;
+        }
+
+        if (state == DEFAULT && (c == ' ' || c == '\t'))
+            break;
+
+        if (c == '\'' && state == DEFAULT) {
+            state = SINGLE;
+            i++;
+            continue;
+        } 
+        else if (c == '\'' && state == SINGLE) {
+            state = DEFAULT;
+            i++;
+            continue;
+        } 
+        else if (c == '"' && state == DEFAULT) {
+            state = DOUBLE;
+            i++;
+            continue;
+        } 
+        else if (c == '"' && state == DOUBLE) {
+            state = DEFAULT;
+            i++;
+            continue;
+        }
+
+        if (c == '\\') {
+            i++;
+            if (input[i]) {
+                if (state == SINGLE) {
+                    if (ft_append_char(&buffer, &len, &cap, '\\') < 0)
+                        return NULL;
+
+                    continue;
+                }
+
+                if (ft_append_char(&buffer, &len, &cap, input[i]) < 0)
+                    return NULL;
+
+                i++;
+                continue;
+            } 
+            else {
+                break; 
+            }
+        }
+
+        if (ft_append_char(&buffer, &len, &cap, c) < 0)
+            return NULL;
+
+        i++;
+    }
+
+    if (state != DEFAULT) {
+        free(buffer);
+        return NULL; // error in quotes
+    }
+
+    buffer[len] = '\0';
+    *index = i;
+
+    return buffer;
 }

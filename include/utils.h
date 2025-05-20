@@ -9,6 +9,7 @@
 
 #define BUFFER_MAX 4096
 #define MAX_PATH 4096
+#define MAX_TOKEN_LEN 64
 
 #define ANSI_COLOR_RED     "\x1b[91m"  // bright red
 #define ANSI_COLOR_GREEN   "\x1b[92m"  // bright green
@@ -35,3 +36,10 @@ typedef struct token {
     struct token *prev;
     struct token *next;
 } token;
+
+//quoting handling.
+typedef enum e_quote_state {
+    DEFAULT,
+    SINGLE,
+    DOUBLE
+} e_quote_state;

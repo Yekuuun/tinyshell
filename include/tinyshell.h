@@ -12,7 +12,7 @@ size_t ft_str_len(const char *str);
 char* ft_str_ncpy(char *dest, const char *src, size_t n);
 int ft_str_cmp(const char *s1, const char *s2);
 char *ft_str_dup(const char *s);
-char *ft_extract_word(const char *line, int *i);
+char *ft_extract_word(const char *input, int *index);
 
 //ft_type
 int ft_type_tolower(int c);
