@@ -1,8 +1,5 @@
 #include "tinyshell.h"
 
-#define BUFFER_MAX 4096
-#define MAX_PATH 4096
-
 static volatile int RUNNING = 1;
 
 /**
@@ -52,7 +49,10 @@ static void print_shell_banner(){
  */
 int start_shell(){
     char buffer[BUFFER_MAX] = {0};
-    printf("\x1B%c", 'c');
+    clear();
+
+    //declaring ptr to token list.
+    token *head = NULL;
 
     //handling commands.
     while(RUNNING > 0){
@@ -63,7 +63,7 @@ int start_shell(){
         }
 
         //handling fgets.
-        size_t len = strlen(buffer);
+        size_t len = ft_str_len(buffer);
         if((len < BUFFER_MAX) && buffer[len - 1] == '\n'){
             buffer[len - 1] = '\0';
         }
@@ -75,7 +75,14 @@ int start_shell(){
             return 1;
         }
 
-        puts(buffer);
+        head = lexer(buffer);
+        if(!head){
+            printf("[!] Error lexing commands.\n");
+            return 1;
+        }
+
+        print_tokens(head);
+        free_tokens(head);
     }
 
     return 0;

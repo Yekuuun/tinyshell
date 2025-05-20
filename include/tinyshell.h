@@ -1,18 +1,20 @@
 #pragma once
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <string.h>
-#include <unistd.h>
-
-#define ANSI_COLOR_RED     "\x1b[91m"  // bright red
-#define ANSI_COLOR_GREEN   "\x1b[92m"  // bright green
-#define ANSI_COLOR_YELLOW  "\x1b[93m"  // bright yellow
-#define ANSI_COLOR_BLUE    "\x1b[94m"  // bright blue
-#define ANSI_COLOR_MAGENTA "\x1b[95m"  // bright magenta
-#define ANSI_COLOR_CYAN    "\x1b[96m"  // bright cyan
-#define ANSI_COLOR_RESET   "\x1b[0m"
+#include "utils.h"
 
 //input.c
 int start_shell();
+
+//builtins
+void clear();
+
+//lib
+size_t ft_str_len(const char *str);
+char* ft_str_ncpy(char *dest, const char *src, size_t n);
+int ft_str_cmp(const char *s1, const char *s2);
+char *ft_extract_word(const char *line, int *i);
+char *ft_str_dup(const char *s);
+
+//lexing
+token *lexer(const char *input);
+void print_tokens(token *head);
+void free_tokens(token *head);
