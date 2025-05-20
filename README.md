@@ -21,18 +21,28 @@
 
 ## Core features 
 
-- Command lexing & parsing
-- Signals interruptions handling
-- Builtin functions
-- Working on custom core functions like `ls, cat, mkdir, history` etc for bringing more fun instead of calling execvp.
+🟢 **Command lexing & parsing** : using lexer synhtax interpretation + quote handling + AST implementation for commands parsing.
 
-**currently building solution...**
+🟢 **Signals interruptions handling** : handling interruptions
 
-### Execution 
+🟢 **Builtin functions** : base builtins functions `exit, echo, clear, history, pwd`
+
+🟢 **Working on custom core functions** like `ls, cat, mkdir` etc for bringing more fun instead of calling execvp => creating my own programs.
+
+🔴 **Command execution** : main core command execution
+
+🔴 **Handling more options** : >>, <<, &&
+
+🔴 **Handling env :** Handling environment variables
+
+
+<br>
+
+## Running tinyshell 
 
 `make && ./tinyshell`
 
----
+<br>
 
 ## Links & ressources
 
