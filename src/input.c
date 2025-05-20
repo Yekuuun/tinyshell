@@ -1,3 +1,7 @@
+/**
+ * Handling main routine for main shell handler.
+ */
+
 #include "tinyshell.h"
 
 static volatile int RUNNING = 1;

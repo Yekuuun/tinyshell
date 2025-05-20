@@ -37,22 +37,24 @@ char* ft_str_ncpy(char *dest, const char *src, size_t n){
  * Custom non case sensitive strcmp function
  */
 int ft_str_cmp(const char *s1, const char *s2){
-    int i;
+    int i = 0;
+    while(s1[i] && s2[i]){
+        char c1 = ft_type_tolower((unsigned char)s1[i]);
+        char c2 = ft_type_tolower((unsigned char)s2[i]);
 
-    for(i = 0; *s1 && *s2; i++){
-        if (s1[i] == s2[i] || (s1[i] ^ 32) == s2[i])
-           continue;
-        else
-           break;
+        if(c1 != c2)
+            return (c1 < c2) ? -1 : 1;
+        
+        i++;
     }
 
-    if(s1[i] == s2[i])
-        return 0;
+    char c1 = ft_type_tolower((unsigned char)s1[i]);
+    char c2 = ft_type_tolower((unsigned char)s2[i]);
 
-    if ((s1[i] | 32) < (s2[i] | 32)) 
-        return -1;
-    
-    return 1;
+    if (c1 == c2)
+        return 0;
+        
+    return (c1 < c2) ? -1 : 1;
 }
 
 /**
