@@ -17,8 +17,27 @@
 >This repo contains samples I wroted. It may not be perfect so don't blame me if you see potentials errors.
 
 >[!Warning]
->I Had habit to use C under windows env so don't blame me if you see Windows synthax haha.
+>I had habit to use C under windows env so don't blame me if you see Windows synthax haha.
+
+## Core features 
+
+- Command lexing & parsing
+- Signals interruptions handling
+- Builtin functions
+- Working on custom core functions like `ls, cat, mkdir, history` etc for bringing more fun instead of calling execvp.
 
 **currently building solution...**
 
+### Execution 
 
+`make && ./tinyshell`
+
+---
+
+## Links & ressources
+
+<a href="https://github.com/zwan074/technical-books/blob/master/Advanced.Programming.in.the.UNIX.Environment.3rd.Edition.0321637739.pdf" target="_blank">Advanced programming in the unix environment</a>
+
+<a href="https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218" target="_blank">ManBell 42 minishell project</a>
+
+<a href="https://medium.com/basecs/leveling-up-ones-parsing-game-with-asts-d7a6fc2400ff" target="_blank">AST Algorithm</a>
