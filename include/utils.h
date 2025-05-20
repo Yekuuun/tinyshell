@@ -65,3 +65,15 @@ typedef struct ast {
     char **argv; //args
     char *filename; //target file
 } ast;
+
+//---------------UTILS--------------
+
+typedef struct history {
+    char *cmd;
+    struct history *next;
+    struct history *prev;
+} history;
+
+void add_to_history(history **head,const char *cmd);
+void free_history(history **ref);
+void display_history();

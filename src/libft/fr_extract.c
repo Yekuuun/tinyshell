@@ -1,6 +1,13 @@
 #include "tinyshell.h"
 
 /**
+ * Check is character is a special meta character
+ */
+static bool is_shell_metacharacter(char c) {
+    return (c == '|' || c == '<' || c == '>');
+}
+
+/**
  * Extract a word from an str.
  */
 char *ft_extract_word(const char *input, int *index) {

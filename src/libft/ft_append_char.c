@@ -3,7 +3,7 @@
 /**
  * Add a character to dynamic buffer if necessary using realloc.
  */
-static int ft_append_char(char **buffer, int *len, int *cap, char c) {
+int ft_append_char(char **buffer, int *len, int *cap, char c) {
     if (*len + 1 >= *cap) {
         *cap *= 2;
         char *new_buf = realloc(*buffer, *cap);

@@ -4,7 +4,8 @@
 
 #include "tinyshell.h"
 
-static volatile int RUNNING = 1;
+int RUNNING = 1;
+history *g_history_head;
 token *g_token_head;
 ast *g_ast_head;
 
@@ -16,6 +17,17 @@ static void get_current_user(){
     char *username = getenv("USER");
     if(username != NULL)
         printf("%s", username);
+}
+
+/**
+ * Print current working dir.
+ */
+static void print_working_dir(){
+    char cwd[MAX_PATH] = {0};
+
+    if(getcwd(cwd, MAX_PATH) != NULL){
+        printf("%s", cwd);
+    }
 }
 
 /**
@@ -34,7 +46,7 @@ static void print_shell_banner(){
 
     printf(ANSI_COLOR_GREEN);
     printf("~");
-    pwd();
+    print_working_dir();
     printf("$ ");
 
     printf(ANSI_COLOR_RESET);
@@ -61,9 +73,10 @@ int start_shell(){
     char buffer[BUFFER_MAX] = {0};
     clear();
 
-    //declaring ptr to token list.
-    g_token_head = NULL;
-    g_ast_head = NULL;
+    //declaring ptr to global structs
+    g_token_head   = NULL;
+    g_ast_head     = NULL;
+    g_history_head = NULL;
 
     //handling commands.
     while(RUNNING > 0){
@@ -101,6 +114,9 @@ int start_shell(){
             return 1;
         }
 
+        //exec.
+
+        add_to_history(&g_history_head, buffer);
         free_tokens(&g_token_head);
         free_ast(&g_ast_head);
     }

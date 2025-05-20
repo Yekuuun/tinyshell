@@ -1,13 +1,6 @@
 #include "tinyshell.h"
 
 /**
- * Check is character is a special meta character
- */
-static bool is_shell_metacharacter(char c) {
-    return (c == '|' || c == '<' || c == '>');
-}
-
-/**
  * Base str_len function.
  */
 size_t ft_str_len(const char *str){

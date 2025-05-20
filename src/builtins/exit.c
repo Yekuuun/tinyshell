@@ -17,7 +17,7 @@ static void print_exit_help(void) {
 /**
  * exit function.
  */
-void exit(const char **args){
+void ft_exit(const char **args){
     int exit_code = 0;
 
     if(args[1]){
@@ -36,7 +36,6 @@ void exit(const char **args){
         }
     }
 
-__CLEANUP:
     free_ast(&g_ast_head);
     free_tokens(&g_token_head);
     fprintf(stderr, "[*] exiting tinyshell.\n");

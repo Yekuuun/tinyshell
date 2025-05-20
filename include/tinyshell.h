@@ -2,7 +2,7 @@
 #include "utils.h"
 
 //global vars
-extern volatile int RUNNING;
+extern int RUNNING;
 extern token *g_token_head;
 extern ast *g_ast_head;
 extern history *g_history_head;
@@ -11,12 +11,14 @@ extern history *g_history_head;
 int start_shell();
 
 //builtins
-void clear();
-void pwd();
-void exit(const char **args);
+int clear();
+int pwd();
+int echo(const char **args);
+void quit(const char **args);
 
 //ft_str
 size_t ft_str_len(const char *str);
+int ft_append_char(char **buffer, int *len, int *cap, char c);
 char* ft_str_ncpy(char *dest, const char *src, size_t n);
 int ft_str_cmp(const char *s1, const char *s2);
 char *ft_str_dup(const char *s);
@@ -37,15 +39,3 @@ void free_tokens(token **head);
 //parsing
 void free_ast(ast **node);
 ast* parse_pipe(token **current);
-
-//---------------UTILS--------------
-
-typedef struct history {
-    char *cmd;
-    struct history *next;
-    struct history *prev;
-} history;
-
-void add_to_history(history **head,const char *cmd);
-void free_history(history **ref);
-void display_history();
