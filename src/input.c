@@ -115,6 +115,9 @@ int start_shell(){
         }
 
         //exec.
+        int exec = execute_ast(g_ast_head);
+        if(exec != 0)
+            RUNNING = 0;
 
         add_to_history(&g_history_head, buffer);
         free_tokens(&g_token_head);

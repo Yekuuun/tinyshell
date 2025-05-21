@@ -45,3 +45,6 @@ ast* parse_pipe(token **current);
 
 //env
 int set_exec_env(const char *path);
+
+//exec
+int execute_ast(ast *node);

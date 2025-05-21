@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #define BUFFER_MAX 4096
 #define MAX_PATH 4096
