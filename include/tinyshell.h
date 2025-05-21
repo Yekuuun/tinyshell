@@ -1,6 +1,9 @@
 #pragma once
 #include "utils.h"
 
+//setup
+#define ENV_PATH "/home/yekuuun/Desktop/os/tinyshell/bin"
+
 //global vars
 extern int RUNNING;
 extern token *g_token_head;
@@ -39,3 +42,6 @@ void free_tokens(token **head);
 //parsing
 void free_ast(ast **node);
 ast* parse_pipe(token **current);
+
+//env
+int set_exec_env(const char *path);

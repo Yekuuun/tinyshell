@@ -15,5 +15,10 @@ int main(int argc, char **argv, char **envp){
         return -1;
     }
 
+    //add exec folder to env.
+    int path = set_exec_env(ENV_PATH);
+    if(path != 0)
+        return 1;
+
     return start_shell();
 }
