@@ -3,7 +3,16 @@
  * Author : Yekuuun
  * Github : https://github.com/Yekuuun
 */
-#include "shared.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <time.h>
+
+int optopt, optind;
+char *optarg;
 
 typedef struct ls_flags {
     int show_hidden;
@@ -20,7 +29,7 @@ typedef struct file_info {
 /**
  * Check if a const char * is a valid path.
  */
-static int is_valid_path(const char *path){
+static int is_valid_dir_path(const char *path){
     struct stat path_stat;
 
     if(stat(path, &path_stat) != 0)
@@ -156,7 +165,7 @@ int main(int argc, char **argv){
     c_path = optind == argc ? "." : argv[optind];
 
     //base checks.
-    if(is_valid_path(c_path) != 0){
+    if(is_valid_dir_path(c_path) != 0){
         printf("[!] Invalid path.\n");
         return 1;
     }
