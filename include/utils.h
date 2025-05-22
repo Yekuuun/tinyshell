@@ -80,3 +80,11 @@ typedef struct history {
 void add_to_history(history **head,const char *cmd);
 void free_history(history **ref);
 void display_history();
+
+//--------BUILTINS------------
+typedef int (*builtin_func)(char **);
+
+typedef struct builtin {
+    const char *name;
+    builtin_func func;
+} builtin;

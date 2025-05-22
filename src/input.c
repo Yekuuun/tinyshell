@@ -71,7 +71,7 @@ static void crtrl_c_handler(int sig){
 int start_shell(){
     signal(SIGINT, crtrl_c_handler);
     char buffer[BUFFER_MAX] = {0};
-    clear();
+    clear(NULL);
 
     //declaring ptr to global structs
     g_token_head   = NULL;

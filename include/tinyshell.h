@@ -9,15 +9,16 @@ extern int RUNNING;
 extern token *g_token_head;
 extern ast *g_ast_head;
 extern history *g_history_head;
+extern builtin builtins[];
 
 //input.c
 int start_shell();
 
 //builtins
-int clear();
-int pwd();
-int echo(const char **args);
-void quit(const char **args);
+int clear(char **args);
+int pwd(char **args);
+int echo(char **args);
+void quit(char **args);
 
 //ft_str
 size_t ft_str_len(const char *str);

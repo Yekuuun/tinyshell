@@ -3,7 +3,7 @@
 /**
  * Base echo function.
  */
-int echo(const char **args){
+int echo(char **args){
     int new_line = 1;
     int i = 0;
 

@@ -17,7 +17,7 @@ static void print_exit_help(void) {
 /**
  * exit function.
  */
-void quit(const char **args){
+void quit(char **args){
     int exit_code = 0;
 
     if(args[1]){
