@@ -82,40 +82,6 @@ static int execute_command(ast *node){
     }
 }
 
-void print_ast(ast *node, int level) {
-    if (!node)
-        return;
-
-    for (int i = 0; i < level; i++)
-        printf("  ");
-
-    switch(node->type) {
-        case AST_PIPELINE:  printf("PIPELINE\n"); break;
-        case AST_REDIR_IN:  printf("REDIR_IN\n"); break;
-        case AST_REDIR_OUT: printf("REDIR_OUT\n"); break;
-        case AST_COMMAND:   printf("COMMAND\n"); break;
-        default:            printf("UNKNOWN\n"); break;
-    }
-
-    if (node->argv) {
-        for (int i = 0; i < 20 && node->argv[i] != NULL; i++) {
-            for (int j = 0; j < level + 1; j++)
-                printf("  ");
-            printf("argv[%d]: %s\n", i, node->argv[i]);
-        }
-    }
-
-    if (node->filename) {
-        for (int i = 0; i < level + 1; i++)
-            printf("  ");
-        printf("filename: %s\n", node->filename);
-    }
-
-    print_ast(node->left, level + 1);
-    print_ast(node->right, level + 1);
-}
-
-
 /**
  * Main function in charge of execution. 
  * @param node => a ptr to the head of the ast three
