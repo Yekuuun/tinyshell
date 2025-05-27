@@ -11,6 +11,9 @@
 #include <dirent.h>
 #include <time.h>
 
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
 int optopt, optind;
 char *optarg;
 
@@ -49,7 +52,6 @@ static void print_help(const char *prog_name) {
     printf("  -h        Display this help message\n");
     printf("  -t        Sort by modification time\n");
 }
-
 
 /**
  * Sorting by time.
@@ -128,17 +130,18 @@ static int main_ls(ls_flags *flags, const char *path){
 //entry
 int main(int argc, char **argv){
     int opt;
+    int state = 0;
     char *c_path = NULL;
 
     //struct
     ls_flags *flags = (ls_flags*)calloc(1, sizeof(ls_flags));
     if(!flags)
-        return 1;
+        return EXIT_FAILURE;
 
     //check help function.
     if(argc > 1 && (strcmp(argv[1], "--help") == 0)){
         print_help(argv[0]);
-        return 0;
+        state = 1; goto __CLEANUP;
     }
 
     //parsing flags.
@@ -150,14 +153,14 @@ int main(int argc, char **argv){
                 flags->long_format = 1; break;
             case 'h':
                 print_help(argv[0]);
-                return 0;
+                goto __CLEANUP;
             case 't':
                 flags->show_hidden = 1; break;
             case '?':
                 fprintf(stderr, "[!] Usage: %s [-a] [-l] [-t] [-h] [files...]\n", argv[0]);
-                return 1;
+                state = 1; goto __CLEANUP;
             default:
-                return 1;
+                state = 1; goto __CLEANUP;
         }
     }
 
@@ -167,13 +170,19 @@ int main(int argc, char **argv){
     //base checks.
     if(is_valid_dir_path(c_path) != 0){
         printf("[!] Invalid path.\n");
-        return 1;
+        state = 1; goto __CLEANUP;
     }
 
     if(access(c_path, R_OK | X_OK) != 0){
         printf("[!] No access to %s \n", c_path);
-        return 1;
+        state = 1; goto __CLEANUP;
     }
 
-    return main_ls(flags, c_path);
+    state = main_ls(flags, c_path);
+
+__CLEANUP:
+    if(flags)
+        free(flags);
+
+    return state;
 }

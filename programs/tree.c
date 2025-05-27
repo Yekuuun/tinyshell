@@ -12,6 +12,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
 #define MAX_DEPTH 20
 #define MAX_PATH  4096
 
@@ -107,21 +110,22 @@ static void main_tree(tree *ctx, const char *path, int level){
 int main(int argc, char **argv){
     if(argc > 2){
         printf("[!] tree only takes 1 argument.\n");
-        return 1;
+        return EXIT_FAILURE;
     }
 
+    //main path to start tree
     const char *path = (argc > 1) ? argv[1] : ".";
 
     if(path != '.' && !path_exist(path))
-        return 1;
+        return EXIT_FAILURE;
 
     if(access(path, R_OK | X_OK) != 0){
         printf("[!] No access to %s \n", path);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     tree ctx = {0};
     main_tree(&ctx, path, 0);
     printf("\n%d directories, %d files\n", ctx.dir_count, ctx.file_count);
-    return 0;
+    return EXIT_SUCCESS;
 }

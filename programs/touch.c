@@ -14,6 +14,9 @@
 #include <dirent.h>
 #include <time.h>
 
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
 typedef struct touch_flags {
     int a_flag; //change access time
     int c_flag; //no create
@@ -72,20 +75,20 @@ static int main_touch(const char *path, touch_flags *flags){
 //entry
 int main(int argc, char **argv){
     int opt;
-    char *path = NULL;
+    int state = 0;
 
     touch_flags *flags = (touch_flags*)calloc(1, sizeof(touch_flags));
     if(!flags)
-        return 1;
+        return EXIT_FAILURE;
 
     if(argc < 2){
         printf("[!] touch missing file operand. Use --help for more informations.\n");
-        return 1;
+        state = 1; goto __CLEANUP;
     }
 
     if(argc == 2 && (strcmp(argv[1], "--help") == 0)){
         show_help(argv[0]);
-        return 0;
+        goto __CLEANUP;
     }
 
     //parsing flags.
@@ -99,18 +102,21 @@ int main(int argc, char **argv){
                 flags->m_flag = 1; break;
             case 'h':
                 show_help(argv[0]);
-                return 0;
+                goto __CLEANUP;
             case '?':
                 printf("Usage: %s [-a] [-c] [-m] [files...]\n", argv[0]);
-                return 1;
+                state = 1; goto __CLEANUP;
             default:
-                return 1;
+                state = 1; goto __CLEANUP;
         }
     }
 
-    path = argv[optind];
-    int result = main_touch(path, flags);
+    const char *path = argv[optind];
+    state = main_touch(path, flags);
 
-    free(flags);
-    return result;
+__CLEANUP:
+    if(flags)
+        free(flags);
+
+    return state;
 }
