@@ -48,6 +48,8 @@
 
 <br>
 
+<img src="https://github.com/Yekuuun/tinyshell/blob/main/assets/demo.png" alt="DebugInfo" />
+
 ## Links & ressources
 
 <a href="https://github.com/zwan074/technical-books/blob/master/Advanced.Programming.in.the.UNIX.Environment.3rd.Edition.0321637739.pdf" target="_blank">Advanced programming in the unix environment</a>

@@ -33,7 +33,6 @@ static int exec_builtin(const char *function_name, char **args){
 static void handle_errno(int err, char **argv){
     if (err == ENOENT) {
         fprintf(stderr, "[!] %s: command not found\n", argv[0]);
-        quit(NULL);
     } 
     else if (err == EACCES) {
         fprintf(stderr, "[!] %s: permission denied\n", argv[0]);
