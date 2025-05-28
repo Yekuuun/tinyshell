@@ -24,6 +24,8 @@
 #define ANSI_COLOR_MAGENTA "\x1b[95m"  // bright magenta
 #define ANSI_COLOR_CYAN    "\x1b[96m"  // bright cyan
 #define ANSI_COLOR_RESET   "\x1b[0m"
+#define ANSI_FONT_BOLD     "\033[1m"
+#define ANSI_FONT_RESET    "\033[0m"
 
 //tokens.
 typedef enum e_token_type {

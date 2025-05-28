@@ -31,9 +31,9 @@
 
 🟢 **Command execution** : main core command execution using native programs. (i tried to upgrade the experience using my custom binaries in `/bin`)
 
-🔴 **Handling more options** : >>, <<, &&
+🟢 **Root detection** : detects if current user is in root mode
 
-🔴 **Root detection** : detects if current user is in root mode
+🔴 **Handling more options** : >>, <<, &&
 
 🔴 **Handling env** : Handling environment variables
 

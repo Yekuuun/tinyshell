@@ -35,22 +35,31 @@ static void print_working_dir(){
  * print shell banner.
  */
 static void print_shell_banner(){
-    printf(ANSI_COLOR_BLUE);
+    unsigned uid = getuid();
+
+    printf(ANSI_FONT_BOLD);
+    printf(uid == 0 ? ANSI_COLOR_MAGENTA : ANSI_COLOR_BLUE);
 
     //user
-    get_current_user();
-    printf("@");
-    get_current_user();
+    if(uid != 0){
+        get_current_user();
+        printf("@");
+        get_current_user();
+    }
+    else{
+        printf("root");
+    }
 
     //path.
     printf(":");
 
-    printf(ANSI_COLOR_GREEN);
+    printf(uid == 0 ? ANSI_COLOR_MAGENTA : ANSI_COLOR_GREEN);
     printf("~");
     print_working_dir();
-    printf("$ ");
+    printf(uid == 0 ? "# " : "$ ");
 
     printf(ANSI_COLOR_RESET);
+    printf(ANSI_FONT_RESET);
 }
 
 /**
