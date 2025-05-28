@@ -9,6 +9,7 @@ extern int RUNNING;
 extern token *g_token_head;
 extern ast *g_ast_head;
 extern history *g_history_head;
+extern int current_history_index;
 extern builtin builtins[];
 
 //input.c

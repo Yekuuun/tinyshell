@@ -73,13 +73,15 @@ typedef struct ast {
 
 typedef struct history {
     char *cmd;
+    int index;
     struct history *next;
     struct history *prev;
 } history;
 
+//history base functions.
 void add_to_history(history **head,const char *cmd);
 void free_history(history **ref);
-void display_history();
+int display_history(char **args);
 
 //--------BUILTINS------------
 typedef int (*builtin_func)(char **);

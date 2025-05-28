@@ -11,6 +11,7 @@ builtin builtins[] = {
     { "clear", clear },
     { "echo", echo },
     { "pwd", pwd },
+    { "history", display_history},
     { NULL, NULL }
 };
 

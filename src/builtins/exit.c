@@ -20,7 +20,7 @@ static void print_exit_help(void) {
 void quit(char **args){
     int exit_code = 0;
 
-    if(args[1]){
+    if(args && args[1]){
         if(ft_str_cmp(args[1], "--help")){
             print_exit_help();
             return;
@@ -36,8 +36,11 @@ void quit(char **args){
         }
     }
 
+    //freeing ressources.
     free_ast(&g_ast_head);
     free_tokens(&g_token_head);
+    free_history(&g_history_head);
+
     fprintf(stderr, "[*] exiting tinyshell.\n");
     _exit(exit_code);
 }

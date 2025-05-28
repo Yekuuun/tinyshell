@@ -13,10 +13,13 @@ static history* create_history_node(const char *cmd){
     history *new_node = (history*)malloc(sizeof(history));
     if(!new_node)
         return NULL;
+    
+    current_history_index = current_history_index + 1;
 
-    new_node->cmd  = ft_str_dup(cmd);
-    new_node->next = NULL;
-    new_node->prev = NULL;
+    new_node->cmd   = ft_str_dup(cmd);
+    new_node->next  = NULL;
+    new_node->prev  = NULL;
+    new_node->index = current_history_index;
 
     return new_node;
 }
@@ -41,16 +44,21 @@ void free_history(history **ref){
 /**
  * Display all history commands.
  */
-void display_history(){
+int display_history(char **args){
+    if(current_history_index == 0)
+        return 0;
+
     history *head = g_history_head;
     if(!head)
-        return;
+        return 1;
 
     printf("History :\n");
     while(head) {
-        printf("\t%s\n", head->cmd);
+        printf("- %s\n", head->cmd);
         head = head->next;
     }
+
+    return 0;
 }
 
 /**
@@ -60,6 +68,9 @@ void display_history(){
  */
 void add_to_history(history **head,const char *cmd){
     if(cmd == NULL)
+        return;
+
+    if(strcmp(cmd, "history") == 0)
         return;
 
     history *new_node = create_history_node(cmd);
@@ -74,7 +85,12 @@ void add_to_history(history **head,const char *cmd){
         while(temp->next)
             temp = temp->next;
 
-        temp->next = new_node;
-        new_node->prev = temp;
+        if(strcmp(temp->cmd, cmd) == 0){
+            free(new_node);
+        }
+        else {
+            temp->next = new_node;
+            new_node->prev = temp;
+        }
     }
 }

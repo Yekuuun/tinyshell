@@ -8,6 +8,7 @@ int RUNNING = 1;
 history *g_history_head;
 token *g_token_head;
 ast *g_ast_head;
+int current_history_index;
 
 
 /**
@@ -77,6 +78,7 @@ int start_shell(){
     g_token_head   = NULL;
     g_ast_head     = NULL;
     g_history_head = NULL;
+    current_history_index = 0;
 
     //handling commands.
     while(RUNNING > 0){
