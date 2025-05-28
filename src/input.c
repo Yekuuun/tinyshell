@@ -38,7 +38,7 @@ static void print_shell_banner(){
     unsigned uid = getuid();
 
     printf(ANSI_FONT_BOLD);
-    printf(uid == 0 ? ANSI_COLOR_MAGENTA : ANSI_COLOR_BLUE);
+    printf(uid == 0 ? ANSI_COLOR_GREEN: ANSI_COLOR_BLUE);
 
     //user
     if(uid != 0){
