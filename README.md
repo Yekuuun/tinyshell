@@ -27,9 +27,9 @@
 
 🟢 **Builtin functions** : base builtins functions `exit, echo, clear, history, pwd`
 
-🟢 **Working on custom core functions** like `ls, cat, mkdir` etc for bringing more fun instead of calling execvp => creating my own programs.
+🟢 **Working on custom core functions** like `ls, cat, mkdir, touch` etc for bringing more fun calling custom binaries like a real shell.
 
-🟢 **Command execution** : main core command execution using native programs. (i tried to upgrade the experience using my custom binaries in `/bin`)
+🟢 **Command execution** : main core command execution using native programs & custom programs. => execvp usage.
 
 🟢 **Root detection** : detects if current user is in root mode
 
